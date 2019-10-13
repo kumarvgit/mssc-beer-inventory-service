@@ -14,31 +14,18 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package guru.sfg.beer.order.service.repositories;
+package guru.sfg.beer.inventory.service.repositories;
 
-
-import guru.sfg.beer.order.service.domain.BeerOrder;
-import guru.sfg.beer.order.service.domain.Customer;
-import guru.sfg.beer.order.service.domain.OrderStatusEnum;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import guru.sfg.beer.inventory.service.domain.BeerInventory;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Lock;
 
-import javax.persistence.LockModeType;
 import java.util.List;
 import java.util.UUID;
-
 
 /**
  * Created by jt on 2019-01-26.
  */
-public interface BeerOrderRepository extends JpaRepository<BeerOrder, UUID> {
+public interface BeerInventoryRepository extends JpaRepository<BeerInventory, UUID> {
 
-    Page<BeerOrder> findAllByCustomer(Customer customer, Pageable pageable);
-
-    List<BeerOrder> findAllByOrderStatus(OrderStatusEnum orderStatusEnum);
-
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    BeerOrder findOneById(UUID id);
+    List<BeerInventory> findAllByBeerId(UUID beerId);
 }

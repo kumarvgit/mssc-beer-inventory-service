@@ -14,31 +14,36 @@
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package guru.sfg.beer.order.service.repositories;
+package guru.sfg.beer.inventory.service.domain;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import guru.sfg.beer.order.service.domain.BeerOrder;
-import guru.sfg.beer.order.service.domain.Customer;
-import guru.sfg.beer.order.service.domain.OrderStatusEnum;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Lock;
-
-import javax.persistence.LockModeType;
-import java.util.List;
+import javax.persistence.Entity;
+import java.sql.Timestamp;
 import java.util.UUID;
-
 
 /**
  * Created by jt on 2019-01-26.
  */
-public interface BeerOrderRepository extends JpaRepository<BeerOrder, UUID> {
+@Getter
+@Setter
+@NoArgsConstructor
+@Entity
+public class BeerInventory extends BaseEntity {
 
-    Page<BeerOrder> findAllByCustomer(Customer customer, Pageable pageable);
+    @Builder
+    public BeerInventory(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate, UUID beerId,
+                         String upc, Integer quantityOnHand) {
+        super(id, version, createdDate, lastModifiedDate);
+        this.beerId = beerId;
+        this.upc = upc;
+        this.quantityOnHand = quantityOnHand;
+    }
 
-    List<BeerOrder> findAllByOrderStatus(OrderStatusEnum orderStatusEnum);
-
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    BeerOrder findOneById(UUID id);
+    private UUID beerId;
+    private String upc;
+    private Integer quantityOnHand = 0;
 }
