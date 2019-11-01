@@ -14,7 +14,7 @@ import java.util.UUID;
  */
 @Slf4j
 @RequiredArgsConstructor
-@Component
+//@Component data initialization
 public class BeerInventoryBootstrap implements CommandLineRunner {
 
     // here upc and uuid has the relation ship
